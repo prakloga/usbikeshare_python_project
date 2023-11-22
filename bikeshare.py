@@ -18,28 +18,36 @@ def get_filters():
     print('Hello! Let\'s explore some US bikeshare data!\n')
 
     valid_cities = ['chicago', 'new york', 'washington']
-    valid_months = ['January', 'February', 'March', 'April', 'May', 'June', 'All']
-    valid_days = ['Monday','Tuesday','Wednesday','Thrusday','Friday','Saturday','Sunday','All']
+    valid_months = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
+    valid_days = ['monday','tuesday','wednesday','thrusday','friday','saturday','sunday','all']
 
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    city = input("Would you like to see data for chicago, new york, washington? ").strip().lower()
-    while city not in valid_cities:
-        print("Oops. It's not a valid input, please enter either chicago, new york, washington")
+    while True:
         city = input("Would you like to see data for chicago, new york, washington? ").strip().lower()
- 
+        if city not in valid_cities:
+            print("Oops, It is not a valid city. Try again")
+            continue
+        else:
+            break
+
     # TO DO: get user input for month (all, january, february, ... , june)
-    month = input("Which month? All, January, February, March, April, May, or June ? ").strip().title()
-    while month not in valid_months:
-        print("Oops. It's not a valid input, please enter either January, February, March, April, May, June or All")
-        month = input("Which month? January, February, March, April, May, June or All? ").strip().title()
+    while True:
+        month = input("Which month? All, January, February, March, April, May, or June ? ").strip().lower()
+        if month not in valid_months:
+            print("Oops, It is not a valid month. Try again")
+            continue
+        else:
+            break
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
-    day = input("Which day? please type your response as a string(e.g., All, Monday, Tuesday, ... Sunday) ").strip().title()
-    while day not in valid_days:
-        print("Oops. It's not a valid input, please enter either All, Monday, Tuesday, .... Sunday)")
-        day = input("Which day? please type your response as a string(e.g., All, Monday, Tuesday, ... Sunday) ").strip().title()
-
-    #print("\nFilter Criteria CITY:",city.title()," ", "MONTH:",month," ","DAY:",day,"\n")
+    while True:
+        day = input("Which day? please type your response as a string(e.g., All, Monday, Tuesday, ... Sunday) ").strip().lower()
+        if day not in valid_days:
+            print("Oops, It is not a valid day. Try again")
+            continue
+        else:
+            break
+        
     print('-'*40)
     return city, month, day
 
@@ -69,16 +77,16 @@ def load_data(city, month, day):
     df['day_of_week_txt'] = df['Start Time'].dt.day_name()
 
     # filter by month if applicable
-    if month != 'All':
+    if month != 'all':
         # use the index of the months list to get the corresponding int
-        months = ['January', 'February', 'March', 'April', 'May', 'June']
+        months = ['january', 'february', 'march', 'april', 'may', 'june']
         month = months.index(month) + 1
 
         # filter by month to create the new dataframe
         df = df[df['month'] == month]
 
     # filter by day of week if applicable
-    if day != 'All':
+    if day != 'all':
         # filter by day of week to create the new dataframe
         df = df[df['day_of_week_txt'] == day.title()]
 
